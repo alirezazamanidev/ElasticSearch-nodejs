@@ -29,8 +29,21 @@ async function GetIndices(req,res,next){
     }
 }
 
+async function RemoveIndice(req,res,next){
+    try {
+        const {indexName}=req.params;
+        const RemoveResult=await elasticClient.indices.delete({index:indexName});
+        return res.json({
+            RemoveResult
+        })
+        
+    } catch (error) {
+        next(error);
+    }
+}
 
 module.exports={
     CreateNewIndex,
-    GetIndices
+    GetIndices,
+    RemoveIndice
 }
