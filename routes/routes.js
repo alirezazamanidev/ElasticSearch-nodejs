@@ -1,11 +1,8 @@
+const { IndiceRoutes } = require('./indices.routes');
 
 const router=require('express').Router();
 
-router.get('/',(req,res)=>{
-    return res.render('pages/index',{
-        message:'hello ejs'
-    });
-})
+router.use('/index',IndiceRoutes)
 
 module.exports={
     AllRoutes:router

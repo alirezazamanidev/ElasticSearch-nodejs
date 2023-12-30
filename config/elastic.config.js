@@ -6,7 +6,10 @@ const elasticClient = new Client({
   auth:{
     username:ELASTIC_USERNAME,
     passwordL:ELASTIC_PASSWORD
-  }
+  },
+  tls: {
+    rejectUnauthorized: false
+}
 });
 
 module.exports= {
