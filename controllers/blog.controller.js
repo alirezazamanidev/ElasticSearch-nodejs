@@ -65,9 +65,18 @@ async function SearchBymultiField(req,res,next){
         next(error);
     }
 }
-async function SearchByRegex(req,res,next){
+async function updateBlog(req,res,next){
     try {
-        
+        const {id}=req.params;
+        const data=req.body;
+        const updateResult=await elasticClient.update({
+            index:IndexBlog,
+            id,
+            body:data
+        });
+        res.json({
+            updateResult
+        })
     } catch (error) {
         next(error);
     }
@@ -79,5 +88,6 @@ module.exports={
     SearchBymultiField,
     CreateNewBlog,
     RemoveBlog,
+    updateBlog
 
 }
