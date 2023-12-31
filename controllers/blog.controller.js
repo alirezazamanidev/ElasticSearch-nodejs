@@ -33,7 +33,18 @@ async function CreateNewBlog(req,res,next){
 }
 async function RemoveBlog(req,res,next){
     try {
-        
+        const {id}=req.params;
+        const deleteResult=await elasticClient.deleteByQuery({
+            index:IndexBlog,
+            query:{
+                match:{
+                    _id:id
+                }
+            }
+        });
+        res.json({
+            deleteResult
+        })
     } catch (error) {
         next(error);
     }
