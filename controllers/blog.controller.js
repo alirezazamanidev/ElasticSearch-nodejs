@@ -1,6 +1,13 @@
+const { elasticClient } = require("../config/elastic.config");
+const IndexBlog='blog'
 async function GetAllBlogs(req,res,next){
     try {
-        
+        const value=req.params.value;
+        const blogs=await elasticClient.search({
+            index:indexedDB,
+            q:value
+        })
+        res.json(blogs)
     } catch (error) {
         next(error);
     }
@@ -8,7 +15,18 @@ async function GetAllBlogs(req,res,next){
 
 async function CreateNewBlog(req,res,next){
     try {
-        
+        const {title,author,text}=req.body;
+        const createdResult=await elasticClient.index({
+            index:IndexBlog,
+            document:{
+                title,
+                text,
+                author
+            }
+        })
+        res.json({
+            createdResult
+        })
     } catch (error) {
         next(error);
     }
@@ -50,5 +68,5 @@ module.exports={
     SearchBymultiField,
     CreateNewBlog,
     RemoveBlog,
-    
+
 }
